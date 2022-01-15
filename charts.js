@@ -136,33 +136,34 @@ function buildCharts(sample) {
  
 
     // 1. Create a variable that filters the metadata array for the object with the desired sample number.
-    var newSamples = data.metadata
-    var sampleArray = newSamples.filter(sampleObj => sampleObj.id == sample);
+    var metaSamples = data.metadata
+    var metaArray = metaSamples.filter(sampleObj => sampleObj.id == sample);
     // Create a variable that holds the first sample in the array.
 
     // 2. Create a variable that holds the first sample in the metadata array.
-    var findings = sampleArray[0];
-    console.log(findings)
+    var firstMeta = metaArray[0];
+    console.log(firstMeta)
 
     // Create variables that hold the otu_ids, otu_labels, and sample_values.
 
     // 3. Create a variable that holds the washing frequency.
-    var floatwfreq = parseFloat(findings.floatwfreq)
-    console.log(floatwfreq)
+    var washfreq = parseFloat(firstMeta.wfreq)
+    console.log(washfreq)
     // Create the yticks for the bar chart.
     
     // 4. Create the trace for the gauge chart.
     var trace3 = {
       type: "indicator",
       domain: {x: [0, 1], y: [0,1]},
-      value: floatwfreq,
-      title: {text: "Belly Button Washing Freq"},
+      value: washfreq,
+      title: { text: '<b>Belly Button Washing Frequency</b> <br> Scrubs per week', font: { size: 18 } },
       type:"indicator",
       mode:"gauge+number",
+      delta: { reference: 2},
       gauge: {
         axis: { range: [null, 9],tickwidth: 1, tickcolor: "black" },
         bar: { color: "black" },
-        bgcolor: "white",
+        bgcolor: "black",
         borderwidth: 2,
         bordercolor: "gray",
         steps: [
@@ -172,6 +173,12 @@ function buildCharts(sample) {
           { range: [6, 8], color: 'greenyellow'},
           { range: [8, 10], color: 'green'}            
         ],
+        threshold: {
+          line: { color: "black", width: 4},
+          thickness: 0.75,
+          value: 8
+
+        }
       }
 
     };
@@ -183,6 +190,7 @@ function buildCharts(sample) {
      width: 500,
      height: 500,
      margin: { t: 25, r: 25, l: 25, b: 25 },
+     paper_bgcolor: "white",
      font: { color: "black", family: "Arial" }
     };
 
